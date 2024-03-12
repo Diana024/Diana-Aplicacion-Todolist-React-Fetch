@@ -10,3 +10,67 @@
     import 'relative/path/to/stylesheet.scss';
 
 */
+body {
+    margin-top: 100px;
+    padding: 4px;
+    background: url(https://img.freepik.com/free-photo/white-plaster-texture_1194-5600.jpg?t=st=1710283901~exp=1710287501~hmac=e25305dde237d0ff3b7f0dc9a358148ea4043154f1a946aceb19eb8d3b9adff6&w=1060);
+    background-color: whitesmoke;
+
+}
+
+h1 {
+    text-align: center;
+    color: rgb(175, 168, 168);
+    font-size:80px;
+    font-family: cursive;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: oblique;
+
+}
+
+
+.container {
+    box-shadow: 
+    0 10px 15px rgba(165, 61, 61, 0.3);
+    background-color: rgb(255, 255, 255);
+    color: rgb(175, 168, 168);
+    border-bottom: 5px solid #ffffff;
+    border-bottom-style:double;
+    border-bottom-width: 10px;
+    border-color: #ccc #3f1616;
+}
+
+
+.list {
+    font-family: cursive;
+    font-size: 25px;
+    color: rgb(90, 89, 87);
+    padding-left: 50px !important;
+    border-bottom: 1px;
+    list-style: none;
+}
+.list-group-item {
+    font-family: cursive;
+    font-size: 25px;
+    color: rgb(90, 89, 87);
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+.list-group-item .delete {
+    color: rgb(226, 149, 149);
+}
+  
+.list-group-item:hover .delete {
+    color: rgb(245, 173, 173);
+  } 
+
+
+.contador {
+    font-family: cursive;
+    font-size: 20px;
+    color: rgb(184, 182, 178);
+    padding-left: 0% !important ;
+}
+
