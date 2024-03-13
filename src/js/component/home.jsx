@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 //include images into your bundle
 // import rigoImage from "../../img/rigo-baby.jpg";
@@ -28,6 +28,77 @@ function deletetask(position) {
 //Add into array -> concat
 //Delete from array -> .filter
 //Update -> .map
+
+//fetch = promesas - solicitud=respuesta
+//primera funcion para crear usuario 
+
+function createUser() {
+	fetch('https://playground.4geeks.com/apis/fake/todos/user/Diana024',{
+      method: "POST",
+      body: JSON.stringify([]),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+//.then es una función que se ejecuta cuando se rechaza la promesa y recibe el error.
+		.then((response) => response.json())
+		.then((data) => console.log(data))
+		.catch((error) => console.log(error))
+}
+
+//fetch = promesas - solicitud=respuesta
+//fetch - 1 creo una function de useEffect codigo se ejecuta cuando el estado que observamos cambia. Creo usuario.
+useEffect(() => {
+	createUser() 
+		getInfo()
+		putInfo()
+},[])
+
+function getInfo() {
+	fetch ('https://playground.4geeks.com/apis/fake/todos/user/Diana024', {
+		method: "GET"
+	}) //Buscamos la url que especificamos con el metodo que especificamos. 
+		.then((response) => response.json())
+		.then((data) => console.log(data))
+		.catch((error) => console.log(error))
+}
+
+function putInfo() {
+	fetch ('https://playground.4geeks.com/apis/fake/todos/user/Diana024', {
+		method: "PUT",
+		body: JSON.stringify([]),
+		headers: {
+		  "Content-Type": "application/json"
+		}
+	  })
+	  .then(resp => {
+		  console.log(resp.ok); // Será true si la respuesta es exitosa
+		  console.log(resp.status); // El código de estado 200, 300, 400, etc.
+		  console.log(resp.text()); // Intentará devolver el resultado exacto como string
+		  return resp.json(); // Intentará parsear el resultado a JSON y retornará una promesa donde puedes usar .then para seguir con la lógica
+	  })
+	  .then(data => {
+		  // Aquí es donde debe comenzar tu código después de que finalice la búsqueda
+		  console.log(data); // Esto imprimirá en la consola el objeto exacto recibido del servidor
+	  })
+	  .catch(error => {
+		  // Manejo de errores
+		  console.log(error);
+	  });
+}
+	
+// 	method: "PUT"
+// 		body: JSON.stringify([tasks]),
+//      	headers: {
+//         "Content-Type": "application/json"
+// 		}
+// 	}) //Buscamos la url que especificamos con el metodo que especificamos. 
+// 		.then((response) => response.json())
+// 		.then((data) => console.log(data))
+// 		.catch((error) => console.log(error))
+// }
+
+
 return (
 	<>
 	<h1 className="text-center"><b>Todolist React</b></h1>
@@ -44,8 +115,25 @@ return (
 		</ul>
 			<div className="contador border-top p-3"><span>{tasks.length} tasks</span></div>	
 	</div>
+	
 	</>
-);
+
+	);
 };
 
 export default Home;
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
