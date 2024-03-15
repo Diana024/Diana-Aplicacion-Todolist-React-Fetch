@@ -14,8 +14,9 @@ const Home = () => {
 function writeTask(event) {
 	// console.log(event);
 	if (event.key === "Enter") {
-		setTasks(tasks.concat(newTask))
+		setTasks(tasks.concat( { label: newTask, done: false }))
 		setNewTask("");
+		putLista(tasks.concat( { label: newTask, done: false }));
 	}
 }
 
@@ -23,6 +24,7 @@ function writeTask(event) {
 function deletetask(position) {
 	const arrayfiltered = tasks.filter((item, index) => index !== position)
 	setTasks(arrayfiltered)
+	putLista(arrayfiltered);
 	}
 	
 //Add into array -> concat
@@ -47,26 +49,24 @@ function createUser() {
 }
 
 //fetch = promesas - solicitud=respuesta
-//fetch - 1 creo una function de useEffect codigo se ejecuta cuando el estado que observamos cambia. Creo usuario.
-useEffect(() => {
-	createUser() 
-		getInfo()
-		putInfo()
-},[])
 
-function getInfo() {
+
+//Función que trae la lista de tareas
+function getLista() {
 	fetch ('https://playground.4geeks.com/apis/fake/todos/user/Diana024', {
 		method: "GET"
 	}) //Buscamos la url que especificamos con el metodo que especificamos. 
 		.then((response) => response.json())
-		.then((data) => console.log(data))
+		.then((data) => setTasks(data))
 		.catch((error) => console.log(error))
 }
 
-function putInfo() {
+//Put obtiene la lista de tareas
+function putLista(tasks) {
+	console.log(tasks)
 	fetch ('https://playground.4geeks.com/apis/fake/todos/user/Diana024', {
 		method: "PUT",
-		body: JSON.stringify([]),
+		body: JSON.stringify(tasks),
 		headers: {
 		  "Content-Type": "application/json"
 		}
@@ -77,27 +77,28 @@ function putInfo() {
 		  console.log(resp.text()); // Intentará devolver el resultado exacto como string
 		  return resp.json(); // Intentará parsear el resultado a JSON y retornará una promesa donde puedes usar .then para seguir con la lógica
 	  })
-	  .then(data => {
-		  // Aquí es donde debe comenzar tu código después de que finalice la búsqueda
+	  .then(data => {// Aquí es donde debe comenzar tu código después de que finalice la búsqueda
 		  console.log(data); // Esto imprimirá en la consola el objeto exacto recibido del servidor
 	  })
-	  .catch(error => {
-		  // Manejo de errores
+	  .catch(error => { // Manejo de errores
 		  console.log(error);
 	  });
 }
-	
-// 	method: "PUT"
-// 		body: JSON.stringify([tasks]),
-//      	headers: {
-//         "Content-Type": "application/json"
-// 		}
+
+// function deleteList(tasks) {
+// 	fetch ('https://playground.4geeks.com/apis/fake/todos/user/Diana024', {
+// 		method: "DELETE"
 // 	}) //Buscamos la url que especificamos con el metodo que especificamos. 
-// 		.then((response) => response.json())
-// 		.then((data) => console.log(data))
+// 		.then((response) => response.json(tasks))
+// 		.then((data) => setTasks(data))
 // 		.catch((error) => console.log(error))
 // }
 
+
+//fetch - 1 creo una function de useEffect codigo se ejecuta cuando el estado que observamos cambia. Creo usuario.
+useEffect(() => {
+	getLista()
+},[])
 
 return (
 	<>
@@ -108,7 +109,7 @@ return (
 				onKeyDown={writeTask} value={newTask} placeholder="Añadir tarea"/>
 				
 		<ul className="list-group list-group-flush">
-				{tasks.map((task,index) => { return (<li className="list-group-item py-3 ms-3" key={index}> {task}   
+				{tasks.map((task,index) => { return (<li className="list-group-item py-3 ms-3" key={index}> {task.label}   
 					<span className="delete" onClick={() => deletetask(index)}><i className="fas fa-trash-alt"></i></span></li>)
 				}
 				)}	

@@ -21,38 +21,36 @@ body {
 h1 {
     text-align: center;
     color: rgb(175, 168, 168);
+    border-style: double rgb(189, 119, 119);
     font-size:80px;
     font-family: cursive;
     font-optical-sizing: auto;
-    font-weight: weight;
+    font-weight: 200px;
     font-style: oblique;
-
+   
 }
 
+
 .container {
-    box-shadow: 
-    0 10px 15px rgba(165, 61, 61, 0.3);
     background-color: rgb(255, 255, 255);
-    color: rgb(175, 168, 168);
-    border-bottom: 5px solid #ffffff;
-    border-bottom-style:double;
-    border-bottom-width: 10px;
+    border-bottom: 1px solid #ffffff;
     border-color: #ccc #3f1616;
+    max-width: 850px;
 }
 
 
 .list {
     font-family: cursive;
     font-size: 25px;
-    color: rgb(90, 89, 87);
-    padding-left: 50px !important;
+    color: rgb(196, 192, 186);
+    padding-left: 31px;
     border-bottom: 1px;
     list-style: none;
 }
 .list-group-item {
     font-family: cursive;
     font-size: 25px;
-    color: rgb(90, 89, 87);
+    color: rgb(201, 150, 150);
     display: inline-flex;
     justify-content: space-between;
 }
@@ -70,6 +68,7 @@ h1 {
     font-family: cursive;
     font-size: 20px;
     color: rgb(184, 182, 178);
-    padding-left: 0% !important ;
+    padding-left: 1% ;
+    box-shadow: 5px 15px 15px rgba(165, 61, 61, 0.3);
 }
 
