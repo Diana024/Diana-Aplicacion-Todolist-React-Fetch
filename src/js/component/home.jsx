@@ -14,6 +14,7 @@ const Home = () => {
 function writeTask(event) {
 	// console.log(event);
 	if (event.key === "Enter") {
+		// console.log("Agrega task");
 		setTasks(tasks.concat( { label: newTask, done: false }))
 		setNewTask("");
 		putLista(tasks.concat( { label: newTask, done: false }));
@@ -22,6 +23,7 @@ function writeTask(event) {
 
 //Esta funcion elimina una posicion del Array por su index.
 function deletetask(position) {
+	console.log(position);
 	const arrayfiltered = tasks.filter((item, index) => index !== position)
 	setTasks(arrayfiltered)
 	putLista(arrayfiltered);
@@ -35,7 +37,7 @@ function deletetask(position) {
 //primera funcion para crear usuario 
 
 function createUser() {
-	fetch('https://playground.4geeks.com/apis/fake/todos/user/Diana024',{
+	fetch('https://playground.4geeks.com/apis/fake/todos/user/Diana024', {
       method: "POST",
       body: JSON.stringify([]),
       headers: {
@@ -51,15 +53,15 @@ function createUser() {
 //fetch = promesas - solicitud=respuesta
 
 
-//Función que trae la lista de tareas
-function getLista() {
-	fetch ('https://playground.4geeks.com/apis/fake/todos/user/Diana024', {
-		method: "GET"
-	}) //Buscamos la url que especificamos con el metodo que especificamos. 
-		.then((response) => response.json())
+//Función que trae la lista de tareas de la Api
+	function getLista() {
+		fetch ('https://playground.4geeks.com/apis/fake/todos/user/Diana024', {
+			method: "GET"
+		}) //Buscamos la url que especificamos con el metodo que especificamos. 
+		.then((response)=> response.json())
 		.then((data) => setTasks(data))
 		.catch((error) => console.log(error))
-}
+	}
 
 //Put obtiene la lista de tareas
 function putLista(tasks) {
@@ -77,22 +79,21 @@ function putLista(tasks) {
 		  console.log(resp.text()); // Intentará devolver el resultado exacto como string
 		  return resp.json(); // Intentará parsear el resultado a JSON y retornará una promesa donde puedes usar .then para seguir con la lógica
 	  })
-	  .then(data => {// Aquí es donde debe comenzar tu código después de que finalice la búsqueda
+	  .then(data => {
+		// Aquí es donde debe comenzar tu código después de que finalice la búsqueda
 		  console.log(data); // Esto imprimirá en la consola el objeto exacto recibido del servidor
 	  })
-	  .catch(error => { // Manejo de errores
+	  .catch(error => { 
+		// Manejo de errores
 		  console.log(error);
 	  });
 }
 
-// function deleteList(tasks) {
-// 	fetch ('https://playground.4geeks.com/apis/fake/todos/user/Diana024', {
-// 		method: "DELETE"
-// 	}) //Buscamos la url que especificamos con el metodo que especificamos. 
-// 		.then((response) => response.json(tasks))
-// 		.then((data) => setTasks(data))
-// 		.catch((error) => console.log(error))
-// }
+function deleteAll() {
+	const arrayFiltered = [{"done": false, "label": "Item 1"}];
+	setTasks(arrayFiltered);
+	putLista(arrayFiltered);
+}
 
 
 //fetch - 1 creo una function de useEffect codigo se ejecuta cuando el estado que observamos cambia. Creo usuario.
@@ -116,7 +117,8 @@ return (
 		</ul>
 			<div className="contador border-top p-3"><span>{tasks.length} tasks</span></div>	
 	</div>
-	
+	<div><span className="delete" onClick={() => deleteAll()}><i className="fas fa-trash-alt"></i></span></div>
+
 	</>
 
 	);
