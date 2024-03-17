@@ -1,10 +1,5 @@
 import React, {useEffect, useState} from "react";
 
-//include images into your bundle
-// import rigoImage from "../../img/rigo-baby.jpg";
-
-//create your first component
-
 const Home = () => {
 
 	const [newTask,setNewTask]=useState("")
@@ -21,7 +16,7 @@ function writeTask(event) {
 	}
 }
 
-//Esta funcion elimina una posicion del Array por su index.
+//Esta funcion elimina una posicion del Array por su index(posicion)
 function deletetask(position) {
 	console.log(position);
 	const arrayfiltered = tasks.filter((item, index) => index !== position)
@@ -34,8 +29,7 @@ function deletetask(position) {
 //Update -> .map
 
 //fetch = promesas - solicitud=respuesta
-//primera funcion para crear usuario 
-
+//1. POST - Crea Usuario.
 function createUser() {
 	fetch('https://playground.4geeks.com/apis/fake/todos/user/Diana024', {
       method: "POST",
@@ -44,26 +38,36 @@ function createUser() {
         "Content-Type": "application/json"
       }
     })
-//.then es una función que se ejecuta cuando se rechaza la promesa y recibe el error.
+//.then (Promesas) función que se ejecuta cuando se rechaza la promesa y recibe el error.
 		.then((response) => response.json())
-		.then((data) => console.log(data))
+		.then((data) => {
+			console.log(data)
+			getLista()
+})
 		.catch((error) => console.log(error))
 }
 
-//fetch = promesas - solicitud=respuesta
-
-
-//Función que trae la lista de tareas de la Api
+//2. GET - funcion que trae/obtiene la lista de tareas de la Api.
 	function getLista() {
 		fetch ('https://playground.4geeks.com/apis/fake/todos/user/Diana024', {
 			method: "GET"
-		}) //Buscamos la url que especificamos con el metodo que especificamos. 
-		.then((response)=> response.json())
+		}) //Buscamos la url que especificamos, con el metodo que especificamos. 
+		.then((response)=> {
+			if (response.ok) {
+				return response.json()
+			} else {
+				if (response.status == 404) {
+					createUser();
+				} else {
+					console.error("Error en la solicitud", response.status);
+				}
+			}
+		})
 		.then((data) => setTasks(data))
 		.catch((error) => console.log(error))
 	}
 
-//Put obtiene la lista de tareas
+//3. PUT - Funcion que actualiza y guarda en servidor la lista de tareas.
 function putLista(tasks) {
 	console.log(tasks)
 	fetch ('https://playground.4geeks.com/apis/fake/todos/user/Diana024', {
@@ -83,42 +87,43 @@ function putLista(tasks) {
 		// Aquí es donde debe comenzar tu código después de que finalice la búsqueda
 		  console.log(data); // Esto imprimirá en la consola el objeto exacto recibido del servidor
 	  })
-	  .catch(error => { 
+	  .catch(error => 
 		// Manejo de errores
-		  console.log(error);
-	  });
+		  console.log(error)
+	  );
 }
 
+//4. DELETE - Función que elimina TODOS los recursos. Usuario & Contenido.
 function deleteAll() {
-	const arrayFiltered = [{"done": false, "label": "Item 1"}];
+	const arrayFiltered = [{"done": false, "label": "GET/POST/PUT/DELETE"}];
 	setTasks(arrayFiltered);
 	putLista(arrayFiltered);
 }
 
 
-//fetch - 1 creo una function de useEffect codigo se ejecuta cuando el estado que observamos cambia. Creo usuario.
+//FETCH - Importante crear function de useEffect: El codigo se ejecuta cuando el estado que observamos cambia.
 useEffect(() => {
 	getLista()
 },[])
 
 return (
 	<>
-	<h1 className="text-center"><b>Todolist React</b></h1>
+	<h1 className="text-center"><b>Fetch-React</b></h1>
 	<div className="container">
-		<input className="list container border-0 py-3" type="text" 
+		<input className="list container border-0 py-1 text-secondary" type="text" 
 				onChange={(event) => {setNewTask(event.target.value)}} 
-				onKeyDown={writeTask} value={newTask} placeholder="Añadir tarea"/>
+				onKeyDown={writeTask} value={newTask} placeholder="Método HTTP"/>
 				
 		<ul className="list-group list-group-flush">
-				{tasks.map((task,index) => { return (<li className="list-group-item py-3 ms-3" key={index}> {task.label}   
+				{tasks.map((task,index) => { return (<li className="list-group-item py-2 ms-3" key={index}> {task.label}   
 					<span className="delete" onClick={() => deletetask(index)}><i className="fas fa-trash-alt"></i></span></li>)
 				}
 				)}	
 		</ul>
-			<div className="contador border-top p-3"><span>{tasks.length} tasks</span></div>	
+			<div className="contador border-top p-4"><span>{tasks.length} tasks</span></div>	
 	</div>
-	<div><span className="delete" onClick={() => deleteAll()}><i className="fas fa-trash-alt"></i></span></div>
-
+	<div>
+		<span className="newButton" onClick={() => deleteAll()}><button class="btn btn-outline-light margin-end mt-4" type="button">DELETE</button></span></div>
 	</>
 
 	);

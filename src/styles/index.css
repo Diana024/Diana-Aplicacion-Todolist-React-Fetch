@@ -41,7 +41,7 @@ h1 {
 
 .list {
     font-family: cursive;
-    font-size: 25px;
+    font-size: 22px;
     color: rgb(196, 192, 186);
     padding-left: 31px;
     border-bottom: 1px;
@@ -49,14 +49,14 @@ h1 {
 }
 .list-group-item {
     font-family: cursive;
-    font-size: 25px;
+    font-size: 22px;
     color: rgb(201, 150, 150);
     display: inline-flex;
     justify-content: space-between;
 }
 
 .list-group-item .delete {
-    color: rgb(226, 149, 149);
+    color: rgb(235, 198, 198);
 }
   
 .list-group-item:hover .delete {
@@ -66,9 +66,16 @@ h1 {
 
 .contador {
     font-family: cursive;
-    font-size: 20px;
+    font-size: 15px;
     color: rgb(184, 182, 178);
     padding-left: 1% ;
-    box-shadow: 5px 15px 15px rgba(165, 61, 61, 0.3);
+    border-inline-start: 3px;
+    box-shadow: 5px 25px 25px rgba(165, 61, 61, 0.3);
 }
 
+.newButton {
+    text-align: center; 
+    padding-left: 67.5%;
+    display: inline-flex;
+    justify-content:flex-end;
+}
